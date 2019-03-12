@@ -76,7 +76,14 @@ domString += `</div>`;
 })
 printToDom('pieDiv', domString);
 };
+const buttonClick = () => {
+console.log('You clicked the button!');
+};
+const buttonEvents = () => {
+document.getElementById('Zoe').addEventListener('click', buttonClick);
+};
 const init = () => {
+    buttonEvents();
 buildDomString();
 };
 init();
