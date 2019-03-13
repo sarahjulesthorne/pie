@@ -41,7 +41,7 @@ const pies = [
        ingredients: 'Pecans, sugar, butter, flour',
        bakeTemp: 5000,
        drinkPairing: 'Milk',
-       imageURL: 'https://cookiesandcups.com/wp-content/uploads/2018/10/pecanpie-3.jpg',
+       imageUrl: 'https://cookiesandcups.com/wp-content/uploads/2018/10/pecanpie-3.jpg',
        instructor: 'Saul',
        iceCream: 'Vanilla',
      },
@@ -50,7 +50,7 @@ const pies = [
        ingredients: 'lemons, sugar, butter, flour',
        bakeTemp: 5000,
        drinkPairing: 'Water',
-       imageURL: 'https://www.williams-sonoma.com/wsimgs/rk/images/dp/recipe/201851/0020/img38l.jpg',
+       imageUrl: 'https://www.williams-sonoma.com/wsimgs/rk/images/dp/recipe/201851/0020/img38l.jpg',
        instructor: 'Saul',
        iceCream: 'none',
      },
@@ -61,17 +61,47 @@ const selectedDiv = document.getElementById(divId);
 selectedDiv.innerHTML = textToPrint;
 };
 //function below designed to build string and print it to dom by using forEach loop to run through selected items in each object of pies.
-const buildDomString = () => {
+const buildDomString = (pieArray) => {
 let domString = '';
 
-pies.forEach((pie) => {
-domString += `<h3>`;
+pieArray.forEach((pie) => {
+    domString += `<div class='card'>`;
+domString += `<h3 class='padding-vertical'>`;
 domString += `${pie.name}`;
 domString += `</h3>`;
+domString += `<img class='padding-vertical' src='${pie.imageUrl}' alt='Image of ${pie.name}'/>`;
+domString += `<p class='padding'>Pair with ${pie.drinkPairing} and ${pie.iceCream} ice cream</p>`;
+domString += `</div>`;
+
 })
 printToDom('pieDiv', domString);
 };
+const buttonClick = (event) => {
+const buttonId = event.target.id;
+const selectedPies = [];
+pies.forEach ((pie) => {
+if (pie.instructor === buttonId) {
+    selectedPies.push(pie);
+}
+})
+if (buttonId === 'all') {
+buildDomString(pies);
+}
+else {
+    buildDomString(selectedPies);
+}
+console.log(event.target.id);
+};
+const buttonEvents = () => {
+document.getElementById('Zoe').addEventListener('click', buttonClick);
+document.getElementById('Greg').addEventListener('click', buttonClick);
+document.getElementById('Saul').addEventListener('click', buttonClick);
+document.getElementById('Michael').addEventListener('click', buttonClick);
+document.getElementById('all').addEventListener('click', buttonClick);
+
+};
 const init = () => {
-buildDomString();
+    buttonEvents();
+buildDomString(pies);
 };
 init();
