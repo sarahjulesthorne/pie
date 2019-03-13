@@ -61,10 +61,10 @@ const selectedDiv = document.getElementById(divId);
 selectedDiv.innerHTML = textToPrint;
 };
 //function below designed to build string and print it to dom by using forEach loop to run through selected items in each object of pies.
-const buildDomString = () => {
+const buildDomString = (pieArray) => {
 let domString = '';
 
-pies.forEach((pie) => {
+pieArray.forEach((pie) => {
     domString += `<div class='card'>`;
 domString += `<h3 class='padding-vertical'>`;
 domString += `${pie.name}`;
@@ -76,14 +76,32 @@ domString += `</div>`;
 })
 printToDom('pieDiv', domString);
 };
-const buttonClick = () => {
-console.log('You clicked the button!');
+const buttonClick = (event) => {
+const buttonId = event.target.id;
+const selectedPies = [];
+pies.forEach ((pie) => {
+if (pie.instructor === buttonId) {
+    selectedPies.push(pie);
+}
+})
+if (buttonId === 'all') {
+buildDomString(pies);
+}
+else {
+    buildDomString(selectedPies);
+}
+console.log(event.target.id);
 };
 const buttonEvents = () => {
 document.getElementById('Zoe').addEventListener('click', buttonClick);
+document.getElementById('Greg').addEventListener('click', buttonClick);
+document.getElementById('Saul').addEventListener('click', buttonClick);
+document.getElementById('Michael').addEventListener('click', buttonClick);
+document.getElementById('all').addEventListener('click', buttonClick);
+
 };
 const init = () => {
     buttonEvents();
-buildDomString();
+buildDomString(pies);
 };
 init();
